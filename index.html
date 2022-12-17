@@ -1,0 +1,95 @@
+<!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+       <!-- Bootstrap Core CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+  <form>
+    <div class="segment">
+
+      <img id='myImage' src="https://images.metmuseum.org/CRDImages/ad/original/LC-83_2_210-001.jpg" alt="medal picture">
+   
+      <label>
+        <h6>Номер экспоната от 5003 до 5102</h6>
+      <input type="text" placeholder="Номер экспоната"/>
+    </label>
+    <label>
+      <h6>Название</h6>
+      <input type="text"/>
+    </label>
+     <label>
+       <h6>Описание</h6>
+  <!--      <div id="description">  -->
+       <textarea></textarea> 
+  <!--     </div>  -->
+    </label>
+     <label>
+       <h6>Департамент</h6>
+      <input type="text"/>
+    </label>
+       <label>
+         <h6>Год</h6>
+      <input type="text"/>
+    </label>
+    <label>
+      <h6>Автор</h6>
+      <input type="text"/>
+    </label>
+    <button class="red" id="button" type="button">Поиск</button>
+      </div>
+  </form> 
+
+</body>
+ 
+
+
+<script>  
+  
+  //рефакторинг цикла и просто рефакторинг
+
+
+for (let i=1; i<6; i++) {
+  document.getElementsByTagName("label")[i].style.display = "none"; 
+}
+
+button.onclick = function() { 
+  document.getElementsByTagName('img')[0].src=''+'1494.gif';
+  let input = document.getElementsByTagName("input") [0].value;
+  // alert(input);
+  let info=input;
+  let url='https://collectionapi.metmuseum.org/public/collection/v1/objects/'+info;
+  fetch(url)
+    .then(response => response.json())
+    .then(res => { 
+      //  alert(res.primaryImage);
+      //  alert(res.title);
+       document.getElementsByTagName('img')[0].src=''+res.primaryImage;
+       for (let i=1; i<6; i++) {
+         document.getElementsByTagName("label")[i].style.display = "block"; 
+       }
+       
+    document.getElementsByTagName("input")[1].value = res.objectName;
+    document.getElementsByTagName("textarea")[0].value = res.title;    
+    document.getElementsByTagName("input")[2].value = res.department; 
+    document.getElementsByTagName("input")[3].value = res.objectDate; 
+    document.getElementsByTagName("input")[4].value = res.artistDisplayName;   
+       
+  })
+    .catch((err) => {
+        console.log(err)})
+    // .finally(()=>alert('OK'));
+
+// надо сделать колесико загрузки, потому что картинка долго загружается или загрузить ее в буфер!!!
+//разобраться с прелоадером! и спиннером!
+//картинка-прелоадер сработала!
+};
+
+
+  
+</script>
+</html>
+
